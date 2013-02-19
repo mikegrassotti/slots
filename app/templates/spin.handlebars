@@ -1,4 +1,3 @@
-{{controller}}
 {{#if changingZip}}
 {{view Ember.TextField valueBinding="zip" placeholder="zip code"}}
 <input type="button" {{action saveZip}} value="Save"></input>
@@ -6,6 +5,9 @@
 Zip Code: {{zip}} <a {{action changeZip}}>Change</a>
 {{/if}}
 <hr/>
+
+{{render 'slots'}}
+
 {{#if isReady}}
   <input type="button" {{action spin}} value="Spin"></input>
 {{/if}}

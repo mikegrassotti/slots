@@ -154,10 +154,20 @@ function program3(depth0,data) {
   
 });
 
+Ember.TEMPLATES['slots'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compiledVersion = '1.0.rc.2';
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  
+
+
+  data.buffer.push("<h3>SLOTS</h3>\n<div class=\"fancy\">\n    <ul class=\"slot\">\n        <!-- In reverse order so the 7s show on load -->\n        <li><span>7</span></li>\n        <li><span>6</span></li>\n        <li><span>5</span></li>\n        <li><span>4</span></li>\n        <li><span>3</span></li>\n        <li><span>2</span></li>\n        <li><span>1</span></li>\n    </ul>\n    <input type=\"button\" id=\"playFancy\" value=\"Play\">\n</div>\n<hr/>");
+  
+});
+
 Ember.TEMPLATES['spin'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compiledVersion = '1.0.rc.2';
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, self=this;
+  var buffer = '', stack1, stack2, hashTypes, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -219,23 +229,24 @@ function program9(depth0,data) {
   }
 
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "controller", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n");
-  hashTypes = {};
   stack1 = helpers['if'].call(depth0, "changingZip", {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n<hr/>\n");
+  data.buffer.push("\n<hr/>\n\n");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isReady", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  options = {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.render),stack1 ? stack1.call(depth0, "slots", options) : helperMissing.call(depth0, "render", "slots", options))));
   data.buffer.push("\n\n");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isSpinning", {hash:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  stack2 = helpers['if'].call(depth0, "isReady", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isDone", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  stack2 = helpers['if'].call(depth0, "isSpinning", {hash:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "isDone", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   return buffer;
   
 });

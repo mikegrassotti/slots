@@ -14,6 +14,7 @@ App.store = require('./store');
 App.EditPersonController = require('./controllers/edit_person_controller');
 App.NewPersonController = require('./controllers/new_person_controller');
 App.PersonController = require('./controllers/person_controller');
+App.SlotsController = require('./controllers/slots_controller');
 App.SpinController = require('./controllers/spin_controller');
 App.Coin = require('./models/coin');
 App.Person = require('./models/person');
@@ -22,6 +23,7 @@ App.IndexRoute = require('./routes/index_route');
 App.NewPersonRoute = require('./routes/new_person_route');
 App.PeopleRoute = require('./routes/people_route');
 App.SpinRoute = require('./routes/spin_route');
+App.SlotsView = require('./views/slots_view');
 
 require('./routes');
 
