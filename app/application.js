@@ -431,7 +431,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   
 
 
-  data.buffer.push("<h3>SLOTS</h3>\n<div class=\"fancy\">\n    <ul class=\"slot\">\n        <!-- In reverse order so the 7s show on load -->\n        <li><span>7</span></li>\n        <li><span>6</span></li>\n        <li><span>5</span></li>\n        <li><span>4</span></li>\n        <li><span>3</span></li>\n        <li><span>2</span></li>\n        <li><span>1</span></li>\n    </ul>\n    <input type=\"button\" id=\"playFancy\" value=\"Play\">\n</div>\n<hr/>");
+  data.buffer.push("<h3>SLOTS</h3>\n<div class=\"fancy\">\n    <ul class=\"slot\">\n        <!-- In reverse order so the 7s show on load -->\n        <li><span>H</span></li>\n        <li><span>hotel</span></li>\n        <li><span>food</span></li>\n        <li><span>cheese</span></li>\n        <li><span>culture</span></li>\n        <li><span>diapers</span></li>\n        <li><span>cherry</span></li>\n    </ul>\n    <input type=\"button\" id=\"playFancy\" value=\"Play\">\n</div>\n<hr/>");
   
 });
 
