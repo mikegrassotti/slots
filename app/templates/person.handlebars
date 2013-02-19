@@ -1,0 +1,13 @@
+<h2>Person</h2>
+
+<p>
+  <b>Name:</b> {{name}}
+</p>
+
+<p>
+  <b>Age:</b> {{age}}
+</p>
+
+{{#linkTo "people"}}←All People{{/linkTo}}
+{{#linkTo "edit_person" model}}Edit{{/linkTo}}
+<a href="#" {{action "destroy"}}>Destroy</a>
