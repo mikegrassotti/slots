@@ -60,7 +60,8 @@ var SlotsController = Ember.ObjectController.extend({
   number: 5,
   winnerNumber: 1,
   time: 5000,
-  loops: 11
+  loops: 11,
+  finalNumbers: null
 
 });
 
@@ -47100,8 +47101,14 @@ var SlotsView = Ember.View.extend({
   // numberBinding: 'controller.number',
   // winnerNumberBinding: 'controller.winnerNumber',
   
+  onEnd: function(finalNumbers) {
+    console.log('it ended with', finalNumbers);
+    self.set('controller.finalNumbers', finalNumbers);
+  },
+  
   didInsertElement: function() {
     console.log('inserted slotsView')
+    var self = this;
     // fancy example
     $('.fancy .slot').jSlots({
         number : this.get('controller.number'),
@@ -47114,6 +47121,7 @@ var SlotsView = Ember.View.extend({
         onStart : function() {
             $('.slot').removeClass('winner');
         },
+        onEnd: this.onEnd,
         onWin : function(winCount, winners) {
             // only fires if you win
             
