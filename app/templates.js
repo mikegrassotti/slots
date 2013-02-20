@@ -157,10 +157,22 @@ function program3(depth0,data) {
 Ember.TEMPLATES['slots'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compiledVersion = '1.0.rc.2';
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var buffer = '', stack1, hashTypes, self=this;
+
+function program1(depth0,data) {
   
+  
+  data.buffer.push("\n        <li><span>A</span></li>\n        <li><span>B</span></li>\n        <li><span>C</span></li>\n        <li><span>D</span></li>\n    ");
+  }
 
-
-  data.buffer.push("<h3>SLOTS</h3>\n<div class=\"fancy\">\n    <ul class=\"slot\">\n        <!-- In reverse order so the 7s show on load -->\n        <li><span>H</span></li>\n        <li><span>hotel</span></li>\n        <li><span>food</span></li>\n        <li><span>cheese</span></li>\n        <li><span>culture</span></li>\n        <li><span>diapers</span></li>\n        <li><span>cherry</span></li>\n    </ul>\n    <input type=\"button\" id=\"playFancy\" value=\"Play\">\n</div>\n<hr/>");
+  data.buffer.push("<h3>Ember Slots</h3>\n\n<div class=\"fancy\">\n  <div class=\"jSlots-wrapper\">\n    ");
+  hashTypes = {'viewName': "STRING"};
+  stack1 = helpers.view.call(depth0, "App.SlotView", {hash:{
+    'viewName': ("slot")
+  },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n  </div>\n</div>\n<hr/>\n\n");
+  return buffer;
   
 });
 
@@ -202,8 +214,10 @@ function program5(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n  <input type=\"button\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "spin", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'target': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "spin", {hash:{
+    'target': ("slot")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Spin\"></input>\n");
   return buffer;
   }
@@ -212,8 +226,10 @@ function program7(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n  <input type=\"button\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "stop", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'target': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "stop", {hash:{
+    'target': ("slot")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Stop\"></input>\n");
   return buffer;
   }
@@ -222,8 +238,10 @@ function program9(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n  <input type=\"reset\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "reset", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'target': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "reset", {hash:{
+    'target': ("slot")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Try Again\"></input>\n");
   return buffer;
   }

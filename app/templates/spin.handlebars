@@ -9,13 +9,13 @@ Zip Code: {{zip}} <a {{action changeZip}}>Change</a>
 {{render 'slots'}}
 
 {{#if isReady}}
-  <input type="button" {{action spin}} value="Spin"></input>
+  <input type="button" {{action spin target="slot"}} value="Spin"></input>
 {{/if}}
 
 {{#if isSpinning}}
-  <input type="button" {{action stop}} value="Stop"></input>
+  <input type="button" {{action stop target="slot"}} value="Stop"></input>
 {{/if}}
 
 {{#if isDone}}
-  <input type="reset" {{action reset}} value="Try Again"></input>
+  <input type="reset" {{action reset target="slot"}} value="Try Again"></input>
 {{/if}}

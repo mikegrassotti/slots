@@ -1,15 +1,14 @@
-<h3>SLOTS</h3>
+<h3>Ember Slots</h3>
+
 <div class="fancy">
-    <ul class="slot">
-        <!-- In reverse order so the 7s show on load -->
-        <li><span>H</span></li>
-        <li><span>hotel</span></li>
-        <li><span>food</span></li>
-        <li><span>cheese</span></li>
-        <li><span>culture</span></li>
-        <li><span>diapers</span></li>
-        <li><span>cherry</span></li>
-    </ul>
-    <input type="button" id="playFancy" value="Play">
+  <div class="jSlots-wrapper">
+    {{#view App.SlotView viewName="slot"}}
+        <li><span>A</span></li>
+        <li><span>B</span></li>
+        <li><span>C</span></li>
+        <li><span>D</span></li>
+    {{/view}}
+  </div>
 </div>
 <hr/>
+

@@ -23,6 +23,7 @@ App.IndexRoute = require('./routes/index_route');
 App.NewPersonRoute = require('./routes/new_person_route');
 App.PeopleRoute = require('./routes/people_route');
 App.SpinRoute = require('./routes/spin_route');
+App.SlotView = require('./views/slot_view');
 App.SlotsView = require('./views/slots_view');
 
 require('./routes');

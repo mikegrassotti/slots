@@ -1,5 +1,5 @@
 (function(){var global = this;function debug(){return debug};function require(p, parent){ var path = require.resolve(p) , mod = require.modules[path]; if (!mod) throw new Error('failed to require "' + p + '" from ' + parent); if (!mod.exports) { mod.exports = {}; mod.call(mod.exports, mod, mod.exports, require.relative(path), global); } return mod.exports;}require.modules = {};require.resolve = function(path){ var orig = path , reg = path + '.js' , index = path + '/index.js'; return require.modules[reg] && reg || require.modules[index] && index || orig;};require.register = function(path, fn){ require.modules[path] = fn;};require.relative = function(parent) { return function(p){ if ('debug' == p) return debug; if ('.' != p.charAt(0)) return require(p); var path = parent.split('/') , segs = p.split('/'); path.pop(); for (var i = 0; i < segs.length; i++) { var seg = segs[i]; if ('..' == seg) path.pop(); else if ('.' != seg) path.push(seg); } return require(path.join('/'), parent); };};require.register("app.js", function(module, exports, require, global){
-require('./vendor/jquery.jSlots.min');
+require('./vendor/jquery.jSlots');
 require('./vendor/jquery.easing.1.3');
 
 module.exports = Ember.Application.create();
@@ -135,6 +135,7 @@ App.IndexRoute = require('./routes/index_route');
 App.NewPersonRoute = require('./routes/new_person_route');
 App.PeopleRoute = require('./routes/people_route');
 App.SpinRoute = require('./routes/spin_route');
+App.SlotView = require('./views/slot_view');
 App.SlotsView = require('./views/slots_view');
 
 require('./routes');
@@ -429,10 +430,22 @@ function program3(depth0,data) {
 Ember.TEMPLATES['slots'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compiledVersion = '1.0.rc.2';
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var buffer = '', stack1, hashTypes, self=this;
+
+function program1(depth0,data) {
   
+  
+  data.buffer.push("\n        <li><span>A</span></li>\n        <li><span>B</span></li>\n        <li><span>C</span></li>\n        <li><span>D</span></li>\n    ");
+  }
 
-
-  data.buffer.push("<h3>SLOTS</h3>\n<div class=\"fancy\">\n    <ul class=\"slot\">\n        <!-- In reverse order so the 7s show on load -->\n        <li><span>H</span></li>\n        <li><span>hotel</span></li>\n        <li><span>food</span></li>\n        <li><span>cheese</span></li>\n        <li><span>culture</span></li>\n        <li><span>diapers</span></li>\n        <li><span>cherry</span></li>\n    </ul>\n    <input type=\"button\" id=\"playFancy\" value=\"Play\">\n</div>\n<hr/>");
+  data.buffer.push("<h3>Ember Slots</h3>\n\n<div class=\"fancy\">\n  <div class=\"jSlots-wrapper\">\n    ");
+  hashTypes = {'viewName': "STRING"};
+  stack1 = helpers.view.call(depth0, "App.SlotView", {hash:{
+    'viewName': ("slot")
+  },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n  </div>\n</div>\n<hr/>\n\n");
+  return buffer;
   
 });
 
@@ -474,8 +487,10 @@ function program5(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n  <input type=\"button\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "spin", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'target': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "spin", {hash:{
+    'target': ("slot")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Spin\"></input>\n");
   return buffer;
   }
@@ -484,8 +499,10 @@ function program7(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n  <input type=\"button\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "stop", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'target': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "stop", {hash:{
+    'target': ("slot")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Stop\"></input>\n");
   return buffer;
   }
@@ -494,8 +511,10 @@ function program9(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n  <input type=\"reset\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "reset", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'target': "STRING"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "reset", {hash:{
+    'target': ("slot")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Try Again\"></input>\n");
   return buffer;
   }
@@ -37310,7 +37329,7 @@ jQuery.extend( jQuery.easing,
  * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
  */
-});require.register("vendor/jquery.jSlots.min.js", function(module, exports, require, global){
+});require.register("vendor/jquery.jSlots.js", function(module, exports, require, global){
 /*
  * jQuery jSlots Plugin
  * http://matthewlein.com/jslot/
@@ -37320,7 +37339,258 @@ jQuery.extend( jQuery.easing,
  * Requires: jQuery v1.4.1 or later
  */
 
-(function(a){a.jSlots=function(c,b){var d=this;d.$el=a(c);d.el=c;d.$el.data("jSlots",d);d.init=function(){d.options=a.extend({},a.jSlots.defaultOptions,b);d.setup();d.bindEvents();};a.jSlots.defaultOptions={number:3,winnerNumber:1,spinner:"",spinEvent:"click",onStart:a.noop,onEnd:a.noop,onWin:a.noop,easing:"swing",time:7000,loops:6};d.randomRange=function(e,f){return Math.floor(Math.random()*(1+f-e))+e;};d.isSpinning=false;d.spinSpeed=0;d.winCount=0;d.doneCount=0;d.$liHeight=0;d.$liWidth=0;d.winners=[];d.allSlots=[];d.setup=function(){var e=d.$el;var g=e.find("li").first();d.$liHeight=g.outerHeight();d.$liWidth=g.outerWidth();d.liCount=d.$el.children().length;d.listHeight=d.$liHeight*d.liCount;d.increment=(d.options.time/d.options.loops)/d.options.loops;e.css("position","relative");g.clone().appendTo(e);d.$wrapper=e.wrap('<div class="jSlots-wrapper"></div>').parent();d.$el.remove();for(var f=d.options.number-1;f>=0;f--){d.allSlots.push(new d.Slot());}};d.bindEvents=function(){a(d.options.spinner).bind(d.options.spinEvent,function(e){if(!d.isSpinning){d.playSlots();}});};d.Slot=function(){this.spinSpeed=0;this.el=d.$el.clone().appendTo(d.$wrapper)[0];this.$el=a(this.el);this.loopCount=0;this.number=0;};d.Slot.prototype={spinEm:function(){var e=this;e.$el.css("top",-d.listHeight).animate({top:"0px"},e.spinSpeed,"linear",function(){e.lowerSpeed();});},lowerSpeed:function(){this.spinSpeed+=d.increment;this.loopCount++;if(this.loopCount<d.options.loops){this.spinEm();}else{this.finish();}},finish:function(){var e=this;var g=d.randomRange(1,d.liCount);var f=-((d.$liHeight*g)-d.$liHeight);var h=((this.spinSpeed*0.5)*(d.liCount))/g;e.$el.css("top",-d.listHeight).animate({top:f},h,d.options.easing,function(){d.checkWinner(g,e);});}};d.checkWinner=function(f,g){d.doneCount++;g.number=f;if((a.isArray(d.options.winnerNumber)&&d.options.winnerNumber.indexOf(f)>-1)||f===d.options.winnerNumber){d.winCount++;d.winners.push(g.$el);}if(d.doneCount===d.options.number){var e=[];a.each(d.allSlots,function(h,i){e[h]=i.number;});if(a.isFunction(d.options.onEnd)){d.options.onEnd(e);}if(d.winCount&&a.isFunction(d.options.onWin)){d.options.onWin(d.winCount,d.winners,e);}d.isSpinning=false;}};d.playSlots=function(){d.isSpinning=true;d.winCount=0;d.doneCount=0;d.winners=[];if(a.isFunction(d.options.onStart)){d.options.onStart();}a.each(d.allSlots,function(e,f){this.spinSpeed=0;this.loopCount=0;this.spinEm();});};d.onWin=function(){if(a.isFunction(d.options.onWin)){d.options.onWin();}};d.init();};a.fn.jSlots=function(b){if(this.length){return this.each(function(){(new a.jSlots(this,b));});}};})(jQuery);
+(function($){
+
+    $.jSlots = function(el, options){
+
+        var base = this;
+
+        base.$el = $(el);
+        base.el = el;
+
+        base.$el.data("jSlots", base);
+
+        base.init = function() {
+
+            base.options = $.extend({},$.jSlots.defaultOptions, options);
+
+            base.setup();
+            base.bindEvents();
+
+        };
+
+
+        // --------------------------------------------------------------------- //
+        // DEFAULT OPTIONS
+        // --------------------------------------------------------------------- //
+
+        $.jSlots.defaultOptions = {
+            number : 3,          // Number: number of slots
+            winnerNumber : 1,    // Number or Array: list item number(s) upon which to trigger a win, 1-based index, NOT ZERO-BASED
+            spinner : '',        // CSS Selector: element to bind the start event to
+            spinEvent : 'click', // String: event to start slots on this event
+            onStart : $.noop,    // Function: runs on spin start,
+            onEnd : $.noop,      // Function: run on spin end. It is passed (finalNumbers:Array). finalNumbers gives the index of the li each slot stopped on in order.
+            onWin : $.noop,      // Function: run on winning number. It is passed (winCount:Number, winners:Array)
+            easing : 'swing',    // String: easing type for final spin
+            time : 7000,         // Number: total time of spin animation
+            loops : 6            // Number: times it will spin during the animation
+        };
+
+        // --------------------------------------------------------------------- //
+        // HELPERS
+        // --------------------------------------------------------------------- //
+
+        base.randomRange = function(low, high) {
+            return Math.floor( Math.random() * (1 + high - low) ) + low;
+        };
+
+        // --------------------------------------------------------------------- //
+        // VARS
+        // --------------------------------------------------------------------- //
+
+        base.isSpinning = false;
+        base.spinSpeed = 0;
+        base.winCount = 0;
+        base.doneCount = 0;
+
+        base.$liHeight = 0;
+        base.$liWidth = 0;
+
+        base.winners = [];
+        base.allSlots = [];
+
+        // --------------------------------------------------------------------- //
+        // FUNCTIONS
+        // --------------------------------------------------------------------- //
+
+
+        base.setup = function() {
+
+            // set sizes
+
+            var $list = base.$el;
+            var $li = $list.find('li').first();
+
+            base.$liHeight = $li.outerHeight();
+            base.$liWidth = $li.outerWidth();
+
+            base.liCount = base.$el.children().length;
+
+            base.listHeight = base.$liHeight * base.liCount;
+
+            base.increment = (base.options.time / base.options.loops) / base.options.loops;
+
+            $list.css('position', 'relative');
+
+            $li.clone().appendTo($list);
+
+            base.$wrapper = $list.wrap('<div class="jSlots-wrapper"></div>').parent();
+
+            // remove original, so it can be recreated as a Slot
+            base.$el.remove();
+
+            // clone lists
+            for (var i = base.options.number - 1; i >= 0; i--){
+                base.allSlots.push( new base.Slot() );
+            }
+
+        };
+
+        base.bindEvents = function() {
+            $(base.options.spinner).bind(base.options.spinEvent, function(event) {
+                if (!base.isSpinning) {
+                    base.playSlots();
+                }
+            });
+        };
+
+        // Slot contstructor
+        base.Slot = function() {
+
+            this.spinSpeed = 0;
+            this.el = base.$el.clone().appendTo(base.$wrapper)[0];
+            this.$el = $(this.el);
+            this.loopCount = 0;
+            this.number = 0;
+
+        };
+
+
+        base.Slot.prototype = {
+
+            // do one rotation
+            spinEm : function() {
+
+                var that = this;
+
+                that.$el
+                    .css( 'top', -base.listHeight )
+                    .animate( { 'top' : '0px' }, that.spinSpeed, 'linear', function() {
+                        that.lowerSpeed();
+                    });
+
+            },
+
+            lowerSpeed : function() {
+
+                this.spinSpeed += base.increment;
+                this.loopCount++;
+
+                if ( this.loopCount < base.options.loops ) {
+
+                    this.spinEm();
+
+                } else {
+
+                    this.finish();
+
+                }
+            },
+
+            // final rotation
+            finish : function() {
+
+                var that = this;
+
+                var endNum = base.randomRange( 1, base.liCount );
+
+                var finalPos = - ( (base.$liHeight * endNum) - base.$liHeight );
+                var finalSpeed = ( (this.spinSpeed * 0.5) * (base.liCount) ) / endNum;
+
+                that.$el
+                    .css( 'top', -base.listHeight )
+                    .animate( {'top': finalPos}, finalSpeed, base.options.easing, function() {
+                        base.checkWinner(endNum, that);
+                    });
+
+            }
+
+        };
+
+        base.checkWinner = function(endNum, slot) {
+
+            base.doneCount++;
+            // set the slot number to whatever it ended on
+            slot.number = endNum;
+
+            // if its in the winners array
+            if (
+                ( $.isArray( base.options.winnerNumber ) && base.options.winnerNumber.indexOf(endNum) > -1 ) ||
+                endNum === base.options.winnerNumber
+                ) {
+
+                // its a winner!
+                base.winCount++;
+                base.winners.push(slot.$el);
+
+            }
+
+            if (base.doneCount === base.options.number) {
+
+                var finalNumbers = [];
+
+                $.each(base.allSlots, function(index, val) {
+                    finalNumbers[index] = val.number;
+                });
+
+                if ( $.isFunction( base.options.onEnd ) ) {
+                    base.options.onEnd(finalNumbers);
+                }
+
+                if ( base.winCount && $.isFunction(base.options.onWin) ) {
+                    base.options.onWin(base.winCount, base.winners, finalNumbers);
+                }
+                base.isSpinning = false;
+            }
+        };
+
+
+        base.playSlots = function() {
+
+            base.isSpinning = true;
+            base.winCount = 0;
+            base.doneCount = 0;
+            base.winners = [];
+
+            if ( $.isFunction(base.options.onStart) ) {
+                base.options.onStart();
+            }
+
+            $.each(base.allSlots, function(index, val) {
+                this.spinSpeed = 0;
+                this.loopCount = 0;
+                this.spinEm();
+            });
+
+        };
+
+
+        base.onWin = function() {
+            if ( $.isFunction(base.options.onWin) ) {
+                base.options.onWin();
+            }
+        };
+
+
+        // Run initializer
+        base.init();
+    };
+
+
+    // --------------------------------------------------------------------- //
+    // JQUERY FN
+    // --------------------------------------------------------------------- //
+
+    $.fn.jSlots = function(options){
+        if (this.length) {
+            return this.each(function(){
+                (new $.jSlots(this, options));
+            });
+        }
+    };
+
+})(jQuery);
 });require.register("vendor/jquery.js", function(module, exports, require, global){
 /*!
  * jQuery JavaScript Library v1.9.0
@@ -47095,6 +47365,80 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 });
 
 
+});require.register("views/slot_view.js", function(module, exports, require, global){
+var SlotView = Ember.View.extend({
+  tagName: 'ul',
+  classNames: ['slot'],
+  listHeight: null,
+  liCount: null,
+  liHeight: null,
+  liWidth: null,
+  spinning: false,
+  spinDuration: 100,
+  stopAt: 1,
+  click: function() {
+    this.toggleProperty('spinning');
+  },
+  didInsertElement: function() {
+    console.log('inserted slotView');
+    var li = this.$().find('li').first();
+    this.set('liHeight', li.outerHeight());
+    this.set('liWidth', li.outerWidth());
+    this.set('liCount', this.$().children().length);
+    this.set('listHeight', (this.get('liHeight') * this.get('liCount')));
+    this.$().css('position', 'relative');
+  },
+  spinningDidChange: function() {
+    console.log('Spinning changed to: ', this.get('spinning'));
+    if (this.get('spinning')) {
+      this.spinEm();
+    }
+  }.observes('spinning'),
+  spinEm: function() {
+    var self = this;
+    this.$().css('top', -this.get('listHeight'));
+    this.$().animate( { 'top' : '0px' }, this.get('spinDuration'), 'linear', function() {
+      self.nextSpin();
+    });
+  },
+  stopEm: function() {
+    var self = this;
+    var endNum = this.randomRange( 1, this.get('liCount') );
+    console.log("stopping at: ", endNum)
+    var finalPos = - ( (this.get('liHeight') * endNum) - this.get('liHeight') );
+    var finalSpeed = this.get('spinDuration') / 2;
+    this.$().css('top', -this.get('listHeight'));
+    this.$().animate( {'top': finalPos}, finalSpeed, 'swing', function() {
+      self.stopped(endNum);
+    });
+  },
+  nextSpin: function() {
+    console.log('next spin: duration is: ', this.get('spinDuration'))
+    this.slowDown();
+    if (this.get('spinning')) {
+      this.spinEm();      
+    } else {
+      this.stopEm();
+    }
+  },
+  slowDown: function() {
+    if (this.get('spinDuration') < 2000) {
+      increment = 10 * this.randomRange( 1, this.get('liCount') );
+      this.incrementProperty('spinDuration', increment);
+    }
+  },
+  stopped: function(endNum) {
+    console.log('STOPPED AT', endNum);
+  },
+  randomRange: function(low, high) {
+    return Math.floor( Math.random() * (1 + high - low) ) + low;
+  }
+  
+});
+
+module.exports = SlotView;
+
+
 });require.register("views/slots_view.js", function(module, exports, require, global){
 var SlotsView = Ember.View.extend({
   templateName: 'slots',
@@ -47110,34 +47454,34 @@ var SlotsView = Ember.View.extend({
     console.log('inserted slotsView')
     var self = this;
     // fancy example
-    $('.fancy .slot').jSlots({
-        number : this.get('controller.number'),
-        winnerNumber : this.get('controller.winnerNumber'),
-        spinner : '#playFancy',
-        // easing : 'easeOutSine',
-        easing: 'swing',
-        time : this.get('controller.time'),
-        loops : this.get('controller.loops'),
-        onStart : function() {
-            $('.slot').removeClass('winner');
-        },
-        onEnd: this.onEnd,
-        onWin : function(winCount, winners) {
-            // only fires if you win
-            
-            $.each(winners, function() {
-                this.addClass('winner');
-            });
-
-            // react to the # of winning slots                 
-            if ( winCount === 1 ) {
-                //alert('You got ' + winCount + ' 7!!!');
-            } else if ( winCount > 1 ) {
-                //alert('You got ' + winCount + ' 7’s!!!');
-            }
-            
-        }
-    });
+    // $('fancyslots').jSlots({
+    //     number : this.get('controller.number'),
+    //     winnerNumber : this.get('controller.winnerNumber'),
+    //     spinner : '#playFancy',
+    //     // easing : 'easeOutSine',
+    //     easing: 'swing',
+    //     time : this.get('controller.time'),
+    //     loops : this.get('controller.loops'),
+    //     onStart : function() {
+    //         $('.slot').removeClass('winner');
+    //     },
+    //     onEnd: this.onEnd,
+    //     onWin : function(winCount, winners) {
+    //         // only fires if you win
+    //         
+    //         $.each(winners, function() {
+    //             this.addClass('winner');
+    //         });
+    // 
+    //         // react to the # of winning slots                 
+    //         if ( winCount === 1 ) {
+    //             //alert('You got ' + winCount + ' 7!!!');
+    //         } else if ( winCount > 1 ) {
+    //             //alert('You got ' + winCount + ' 7’s!!!');
+    //         }
+    //         
+    //     }
+    // });
   },
   contentChanged: function() {
     this.rerender();
