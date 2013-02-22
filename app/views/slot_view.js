@@ -8,6 +8,7 @@ var SlotView = Ember.View.extend({
   spinning: false,
   spinDuration: 100,
   stopAt: 1,
+  spinCount: 0,
   click: function() {
     this.toggleProperty('spinning');
   },
@@ -28,9 +29,12 @@ var SlotView = Ember.View.extend({
   }.observes('spinning'),
   spinEm: function() {
     var self = this;
+    console.log("spin # ", endNum)
     this.$().css('top', -this.get('listHeight'));
     this.$().animate( { 'top' : '0px' }, this.get('spinDuration'), 'linear', function() {
-      self.nextSpin();
+      if (self.get('spinning')) {
+        self.spinEm();
+      }
     });
   },
   stopEm: function() {
@@ -43,21 +47,6 @@ var SlotView = Ember.View.extend({
     this.$().animate( {'top': finalPos}, finalSpeed, 'swing', function() {
       self.stopped(endNum);
     });
-  },
-  nextSpin: function() {
-    console.log('next spin: duration is: ', this.get('spinDuration'))
-    this.slowDown();
-    if (this.get('spinning')) {
-      this.spinEm();      
-    } else {
-      this.stopEm();
-    }
-  },
-  slowDown: function() {
-    if (this.get('spinDuration') < 2000) {
-      increment = 10 * this.randomRange( 1, this.get('liCount') );
-      this.incrementProperty('spinDuration', increment);
-    }
   },
   stopped: function(endNum) {
     console.log('STOPPED AT', endNum);
